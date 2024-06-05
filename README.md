@@ -5,7 +5,7 @@ This is a Django-based application for managing employee attendance, login/logou
 ## Features
 
 - **Attendance Management:** Track employee attendance with login/logout times.
-- **Employee Management:** Create and manage employee accounts.
+- **Employee Management:** Create and manage employee.
 - **Report Generation:** Download comprehensive attendance reports.
 - **Department Management:** Add and manage departments to categorize employees.
 
