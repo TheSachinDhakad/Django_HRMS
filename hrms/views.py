@@ -93,47 +93,7 @@ class Dashboard(LoginRequiredMixin,ListView,):
         context['admin_count'] = get_user_model().objects.filter(is_superuser = 1).count()
         context['workers'] = User.objects.order_by('-id').filter(is_superuser=0)
         return context
-    # def get_twh(emp_id):
-        # a12 = Attendance.objects.get(pk = self.kwargs['pk'])
-        # a11 = super().get_twh(**kwargs)
-        # a12 = Attendance.objects.get(id = emp_id)
-        # a11['twh'] = a12
-        # print(a12)
-        # pds = User.objects.get(Q(staff__id=self.kwargs['pk']))
-        # q = Attendance.objects.filter(staff=pds)
-        # print(pds)
-# def get_employee_name(request,id):
-#     a1 = Attendance.objects.get(pk=staff_id)
-#     a1.twh = twh
-#     a1.save()
-#     return HttpResponse('aadfdfadsfasdfadsfadsfasdsdf')
-# def display_employee(request, staff_id):
-#     employee = Attendance.objects.get(pk=staff_id)
-#     value = employee.value
-#     context = {
-#         'employee': employee,
-#         'value': value
-#     }
-#     return HttpResponse('faeffewff')
-#     print(context)
-
-    # attendance = Attendance.objects.filter(staff_id=id).last()
-        # # if attendance:
-    # a1 = attendance.twh
-        # print(a2)
-    # a1 = Attendance.objects.values(id).last()['twh']
-    # print(a1)
-        # time_object = datetime.strptime(a2, "%H:%M:%S.%f")
-        # time_integer = int(time_object.strftime("%H%M%S"))
-        # print(time_integer)
-        # if time_integer >= 0:
-        #     print('done')
-        # else:
-        #     print('ND')  
-        # if id == 2:
-    # return HttpResponse('<h1> hello guyz </h1>')
-        # else:
-        #     return HttpResponse('gfafwe')
+    
 
 class Employee_New(CreateView):
     model = get_user_model() 
@@ -301,64 +261,13 @@ class Payroll(LoginRequiredMixin, ListView,):
     login_url = 'hrms:login'
     context_object_name = 'stfpay'
    
-    # def salary():
-    #     print('start')
-    #     # staff_id = request.get['pk']
-    #     staff_id = 3
-    #     user = User.objects.get(id=staff_id)
-    #     print(user)
-
-    #     salary = float(user.salary)
-    #     print(salary)
-
-    #     if salary == 0:
-    #         sal_per_day = 0
-    #     else:    
-    #         sal_per_day = salary / 25
-
-    #     is_present = Attendance.objects.filter(staff=staff_id)
-    #     print(is_present[0].status)
-
-    #     count = 0
-        
-    #     for i in range(len(is_present)):
-    #         if is_present[i].status == "PRESENT":
-    #             count += 1
-
-    #     print(count)
-    #     total_sal = sal_per_day * count
-    #     print(total_sal)
-        
-    # salary()
 class RecruitmentNew (CreateView):
     model = Recruitment
     template_name = 'hrms/recruitment/index.html'
     form_class = RecruitmentForm
     success_url = reverse_lazy('hrms:recruitment')
 
-class RecruitmentAll(LoginRequiredMixin,ListView):
-    model = Recruitment
-    login_url = 'hrms:login'
-    template_name = 'hrms/recruitment/all.html'
-    context_object_name = 'recruit'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        data = requests.get("https://script.googleusercontent.com/macros/echo?user_content_key=U7MEkkhMUwRt3KrET5iL0gkmCzyTKb52PDnjuHi5NlOd6rnzrq2X1PR2zYe1bU9ABXrJRDGw99sDlPhxj3_Khl1HOBbG4P1pm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnAi2aJZGbP2FVRDstJrcUxI3al7Y5mCrv9NHX_PRqzx2tabxNITQD8yd8VLn0xbjSPAFzgbcuN1KEwOFBTjDbW4zpm50RqvrZA&lib=ME2YbkWRlb0EHiAseivp7PHA-nDy3ldf7").json()
-        # print(data)
-        
-        newdata = []
-        for i in data:
-            newdata.append({"first":i['First Name'],"last": i['Last Name'],"mobile": i['Mobile Number'],"email": i['Personal Email ID'] , "Qualification":i['Qualification'],"Experience":i['Fresher/Experience ']})
-        # print(newdata)
-        context['data'] = newdata
-        return context
 
-class RecruitmentDelete (LoginRequiredMixin,View):
-    login_url = 'hrms:login'
-    def get (self, request,pk):
-     form_app = Recruitment.objects.get(pk=pk)
-     form_app.delete()
-     return redirect('hrms:recruitmentall', permanent=True)
 
 class Pay(LoginRequiredMixin,ListView):
     model = User
@@ -377,31 +286,6 @@ class Report(LoginRequiredMixin,ListView):
         context['present_staffers'] = pstaff
         return context
 # break     
-class Break_new(LoginRequiredMixin,ListView):
-    model = Break
-    template_name = 'hrms/Breaks/break.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["today"] = timezone.localdate()
-
-
-        pstaff = Break.objects.all()
-
-
-        context['present_staffers'] = pstaff
-        return context
-
-class Break_in(LoginRequiredMixin,View):
-   
-    
-    def get(self, request,*args, **kwargs):
-        user=Break.objects.get(Q(staff__id=self.kwargs['pk']) & Q(date=timezone.localdate()))
-        user.break_in = datetime.now()
-        user.bi = datetime.now()
-        print(user.staff.first_name)
-        user.save()
-        return redirect('hrms:break')
-    
 class Attendance_In(LoginRequiredMixin,View):
     login_url = 'hrms:login'
 
@@ -456,15 +340,6 @@ def export_table_to_csv(request):
     return response
 
 
-
-
-
-
-
-
-###################
-
-
 def import_api_data_to_excel(request):
     api_url = 'https://script.googleusercontent.com/macros/echo?user_content_key=U7MEkkhMUwRt3KrET5iL0gkmCzyTKb52PDnjuHi5NlOd6rnzrq2X1PR2zYe1bU9ABXrJRDGw99sDlPhxj3_Khl1HOBbG4P1pm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnAi2aJZGbP2FVRDstJrcUxI3al7Y5mCrv9NHX_PRqzx2tabxNITQD8yd8VLn0xbjSPAFzgbcuN1KEwOFBTjDbW4zpm50RqvrZA&lib=ME2YbkWRlb0EHiAseivp7PHA-nDy3ldf7'
   
@@ -498,10 +373,4 @@ def import_api_data_to_excel(request):
 
     return response
 
-# class ButtonPressView(View):
-#     def post(self, request):
-#         # if 'button_press' in request.POST:
-#         #     button_press = ButtonPress.objects.create()
-#         #     button_press.save()
-#         #     return render(request, 'index.html')
-#         return render(request, 'a2.html')
+

@@ -37,11 +37,9 @@ urlpatterns = [
 
     path("dashboard/leave/new/", views.LeaveNew.as_view(), name="leave_new"),
 
-#Recruitment
 
-    path("recruitment/",views.RecruitmentNew.as_view(), name="recruitment"),
-    path("recruitment/all/",views.RecruitmentAll.as_view(), name="recruitmentall"),
-    path("recruitment/<int:pk>/delete/", views.RecruitmentDelete.as_view(), name="recruitmentdelete"),
+
+
 
 #Payroll
     path("employee/pay/",views.Pay.as_view(), name="payroll"),
@@ -49,10 +47,7 @@ urlpatterns = [
 
 #report
     path('dashboard/report/in/', views.Report.as_view(), name='report'),
-#Break
-    path('dashboard/break/in/', views.Break_new.as_view(), name='break'),
-    path('dashboard/break/<int:pk>/in/', views.Break_in.as_view(), name='break_in'),
-    path('dashboard/break/<int:pk>/out/', views.Break_out.as_view(), name='break_out'),
+
 
         # export to csv 
 path('export-csv/', views.export_table_to_csv, name='export_table_to_csv'),
