@@ -1,0 +1,109 @@
+{% load static %}
+
+<nav class="sidebar sidebar-offcanvas bg-dark" id="sidebar">
+  <ul class="nav bg-dark" style="background-color:#a2ddfc; border-radius:0 0 30px 0 ">
+    <li class="nav-item nav-profile" >
+      <div class="nav-link bg-dark">
+        <div class="user-wrapper">
+          <div class="profile-image"></div>
+          <div class="text-wrapper">
+            {% comment %} <p class="profile-name">{{ user.username | upper }}</p> {% endcomment %}
+            <div>
+              {% comment %} <img src="{% static 'hrms/images/a.jpeg' %}"style="margin-right:60px;" width=200px> {% endcomment %}
+              {% comment %} <small class="designation text-muted">Administrator</small>
+              <span class="status-indicator online"></span> {% endcomment %}
+            </div>
+          </div>
+        </div>
+        {% if user.is_superuser %}
+        <a href="{% url 'hrms:employee_new' %}" class="btn btn-primary btn-block" >New Staff
+          <i class="mdi mdi-plus"></i>
+        </a>
+        {% endif %}
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hrms:dashboard' %}">
+        <i class="fa fa-dashboard" style="color: black; font-size:16px"></i>
+        <span class="menu-title"  style="color: black; font-size:16px">&emsp;Dashboard</span>
+      </a>
+    </li>
+    {% if user.is_superuser %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hrms:employee_all' %}" aria-expanded="false" aria-controls="ui-basic">
+        <i class="fa fa-user" style="color: black; font-size:16px"></i>
+        <span class="menu-title" style="color: black; font-size:16px">&emsp;Employee</span>
+      </a>
+    </li>
+    {% endif %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hrms:attendance_new' %}">
+        <i class="fa fa-calendar" style="color: black; font-size:16px"></i>
+        <span class="menu-title" style="color: black; font-size:16px">&emsp;Attendance</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hrms:report' %}">
+        <i class="fa fa-square" style="color: black; font-size:16px"></i>
+        <span class="menu-title" style="color: black; font-size:16px">&emsp;Report</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'hrms:leave_new' %}">
+        <i class="fa fa-sign-out" style="color: black; font-size:16px"></i>
+        <span class="menu-title" style="color: black; font-size:16px">&emsp;Leave</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <i class="fa fa-folder" style="color: black; font-size:16px"></i>
+        <span class="menu-title" style="color: black; font-size:16px">&emsp;Department</span>
+        <i class="menu-arrow"></i>
+      </a>
+      {% if user.is_superuser %}
+      <a class="nav-link" href="{% url 'hrms:dept_new' %}" style="color: black; font-size:16px">
+        <i class="fa fa-plus" style="color: black; font-size:16px"></i>&emsp;New Department
+      </a>
+      {% endif %}
+      <hr>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          {% for dept in depts %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ dept.get_absolute_url }}">{{ dept.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </li>
+    {% comment %} <li class="nav-item">
+      <a class="nav-link" href="{% url 'hrms:recruitmentall' %}">
+        <i class="fa fa-database" style="color: black; font-size:16px"></i>
+        <span class="menu-title" style="color: black; font-size:16px">&emsp;Recruitment</span>
+      </a> {% endcomment %}
+
+          </li>
+
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'hrms:payroll' %}"> -->
+              <!-- <i class="fa fa-usd"></i> -->
+              <!-- <span class="menu-title font-weight-bold">&emsp;Payroll</span> -->
+            <!-- </a>
+          </li> -->
+          {% comment %} <li class="nav-item">
+            <a class="nav-link" href="{% url 'hrms:break' %}">
+              <i class="fa fa-hourglass" style="color: black; font-size:16px">&nbsp&nbsp&nbsp</i>
+              <span class="menu-title" style="color: black; font-size:16px">Take A Break</span>
+            </a>
+          </li> {% endcomment %}
+
+          {% comment %} <li class="nav-item">
+
+          <li class="nav-item">
+            <a class="nav-link" href="pages/icons/font-awesome.html">
+              <i class="fa  fa-gears"></i>
+              <span class="menu-title">&emsp;Settings</span>
+            </a>
+          </li> {% endcomment %}
+        </ul>
+      </nav>

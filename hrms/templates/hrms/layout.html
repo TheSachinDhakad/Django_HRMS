@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title  %}{% endblock title %}</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'hrms/vendors/iconfonts/mdi/css/materialdesignicons.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'hrms/vendors/iconfonts/font-awesome/css/font-awesome.css' %} ">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+  
+  <link rel="stylesheet" href="{% static 'hrms/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'hrms/css/toastr.min.css' %}">
+  <link rel="shortcut icon" href="{% static 'hrms/images/favicon.png' %}" />
+</head>
+  
+<body>
+  <div class="container-scroller">
+    {% include "hrms/nav.html" %}
+    <div class="container-fluid page-body-wrapper">
+      {% include 'hrms/sidebar.html' %}
+        {% block content %} {% endblock content %}
+        {% include 'hrms/footer.html' %}
+    </div>
+  </div>
+  <!-- plugins:js -->
+  
+  <script src="{% static 'hrms/vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'hrms/vendors/js/vendor.bundle.addons.js' %}"></script>
+  <script src="{% static 'hrms/js/toastr.min.js' %}"></script>
+  <script src="{% static 'hrms/js/sweetalert2@8.js' %}"></script>
+  <script src="{% static 'hrms/js/pay.js' %}"></script>
+
+<!-- Include CSS for the datepicker widget -->
+
+<!-- Include JS files for the datepicker widget -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+  {% block noty %}
+  {% endblock noty %}
+</body>
+
+</html>

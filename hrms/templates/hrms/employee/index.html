@@ -1,0 +1,124 @@
+{% extends 'hrms/layout.html' %}
+{% load static %}
+{% block title %} ITSC-HRMS {% endblock title %}
+      <!--  MAIN BODY START HERE -->
+          {% block content %}
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="row">
+            <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'hrms:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee </li>
+                        <li class="breadcrumb-item active" aria-current="page">All</li>
+                    </ol>
+                </nav>
+            <div class="col-lg-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">All Employees<a href="{% url 'hrms:employee_new' %}" class="btn btn-sm btn-success mb-3 float-right">Add New +</a></h4>
+                    
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>
+                            Thumbnail
+                          </th>
+                          <th>
+                            First name
+                          </th>
+                          <th>
+                            Last name
+                          </th>
+                          <th>
+                            Telephone
+                          </th>
+                          <th>
+                            E-mail
+                          </th> 
+                          <th>
+                            Actions
+                          </th>                         
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for employee in employees  %}
+                      {% if not employee.is_superuser %}
+                        <tr>
+                          <td class="font-weight-medium">
+                            <img src="{{employee.thumb.url}}" class='rounded img-fluid' alt="">
+                          </td>
+                          <td>
+                            {{employee.first_name}}
+                          </td>
+                          <td>
+                            {{employee.last_name}}
+                          </td>
+                          <td>
+                           {{employee.mobile}}
+                          </td>
+                          <td class="text-danger"> 
+                            {{employee.email}}
+                          </td>
+                          <td>
+                          
+                            <div class="btn-group dropdown">
+                              <button type="button" class="btn btn-success dropdown-toggle btn-rounded btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               <i class="fa fa-cog "></i> Manage
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'hrms:employee_view' pk=employee.pk %}">
+                                  <i class="fa fa-eye text-success fa-fw"></i>View</a>
+                                <a class="dropdown-item" href="{% url 'hrms:employee_update' pk=employee.pk %}">
+                                  <i class="fa fa-edit text-info fa-fw"></i>Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <!-- <a class="dropdown-item" href="{% url 'hrms:employee_delete' pk=employee.pk %}">
+                                  <i class="fa fa-trash text-danger fa-fw"></i>Delete</a> -->
+                              </div>
+                            </div>                  
+                          </td>
+                        </tr>
+                        {%endif%}
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                    {% if is_paginated %}
+                      <nav aria-label="Page navigation example" class='mt-4'>
+                        <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                          <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+                        {% else %}
+
+                          <li class="page-item disabled"><span class='page-link '>Previous</span></li>
+                        {% endif %}
+                          <li class="disabled"> <span class='page-link'> Page {{page_obj.number}} of {{page_obj.paginator.num_pages}} </span></li>
+                        {% if page_obj.has_next %}
+                          <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+                        {% else %}
+                          <li class="page-item disabled"><span class='page-link '>Next</span></li> 
+                        {% endif %}                        
+                        </ul>
+                    </nav>
+                    {% endif %}
+                
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        {% block noty %}
+        <script>
+          {% if messages %}
+            {% for message in messages  %}
+              toastr.success('{{message}}')
+            {% endfor %}
+          {% endif %}
+        </script>
+        {% endblock noty %}
+        {% endblock content %}

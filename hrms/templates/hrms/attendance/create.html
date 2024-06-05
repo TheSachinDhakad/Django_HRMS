@@ -1,0 +1,108 @@
+{% extends 'hrms/layout.html' %}
+{% load static %}
+{% block title %} Attendance| ITSC-HRMS {% endblock title %}
+
+{% block content %}
+
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'hrms:dashboard' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Attendance </li>
+                    </ol>
+                </nav>
+
+                <div class="col-lg-12 grid-margin">
+                   
+                                </form><br>
+                            <h4 class="text-center text-primary"><i class="fa  fa-sign-in">&emsp; Signed In Staffer(s) </i> </h4><hr>
+                            {% if present_staffers %}
+                            <small class='text-center'>This is a list of staffer(s) that are currently present. </small>
+                             <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            Date
+                                                        </th>
+                                                        <th>
+                                                            First-In (Arrival)
+                                                        </th>
+                                                        <th>
+                                                            Last-Out (Departure)
+                                                        </th>
+                                                        <th>
+                                                            Name
+                                                        </th>
+                                                        <th>
+                                                            Action(s)
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if user.is_superuser%}
+                                                    {% for ps in present_staffers %}
+                                                        <tr>
+                                                            <td class="py-1">
+                                                                {{ps.date}}
+                                                            </td>
+                                                            <td>
+                                                            <strong>{{ps.first_in}}</strong>
+                                                            </td>
+                                                            <td>
+                                                            
+                                                                <strong>{{ps.last_out }}</strong>
+                                                            </td>
+                                                            <td>
+                                                                {{ps.staff.first_name}} - {{ ps.staff.last_name}}
+
+                                                            </td>
+                                                            <td>
+                                                                {% comment %} <a href="{% url 'hrms:attendance_out' pk=ps.staff.pk %}" {% if not ps.last_out %} class="btn btn-sm btn-info"  {% endif %} class="btn btn-sm btn-info disabled" > <i class="fa fa-sign-out"></i> Sign-out</a> {% endcomment %}
+                                                                <a href="{% url 'hrms:attendance_in' pk=ps.staff.pk %}"  {% if not ps.first_in %} class="btn btn-sm btn-info"  {% endif %} class="btn btn-sm btn-info disabled" > <i class="fa fa-sign-out"></i> Sign-in</a>
+                                                                <a href="{% url 'hrms:attendance_out' pk=ps.staff.pk %}"  class="btn btn-sm btn-info " > <i class="fa fa-sign-out"></i> Sign-out</a>
+                                                            </td>
+                                                        </tr>
+
+                                                    {% endfor %}
+                                                    {% else %}
+                                                      {% for ps in present_staffers %}
+                                                       {% if user.first_name  ==  ps.staff.first_name and user.last_name == ps.staff.last_name%}
+                                                        <tr>
+                                                            <td class="py-1">
+                                                                {{ps.date}}
+                                                            </td>
+                                                            <td>
+                                                            <strong>{{ps.first_in}}</strong>
+                                                            </td>
+                                                            <td>
+
+                                                                <strong>{{ps.last_out }}</strong>
+                                                            </td>
+                                                            <td>
+                                                            {{ps.staff.first_name}} - {{ps.staff.last_name}}
+                                                            </td>
+                                                            <td>
+                                                                {% comment %} <a href="{% url 'hrms:attendance_out' pk=ps.staff.pk %}" {% if not ps.last_out %} class="btn btn-sm btn-info"  {% endif %} class="btn btn-sm btn-info disabled" > <i class="fa fa-sign-out"></i> Sign-out</a> {% endcomment %}
+                                                                <a href="{% url 'hrms:attendance_in' pk=ps.staff.pk %}"  {% if not ps.first_in %} class="btn btn-sm btn-info"  {% endif %} class="btn btn-sm btn-info disabled" > <i class="fa fa-sign-out"></i> Sign-in</a>
+                                                                <a href="{% url 'hrms:attendance_out' pk=ps.staff.pk %}"  class="btn btn-sm btn-info " > <i class="fa fa-sign-out"></i> Sign-out</a>
+                                                            </td>
+                                                        </tr>
+                                                       {% endif %}
+                                                      {% endfor %}
+                                                   {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                            {% else %}
+                                <p class="lead"> There are currently no staffers in the system </p>
+                            {% endif %}   
+                                
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

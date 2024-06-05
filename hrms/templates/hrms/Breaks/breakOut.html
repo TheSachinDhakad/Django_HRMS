@@ -1,0 +1,9 @@
+{% extends 'hrms/layout.html' %}
+{% load static %}
+{% block title %} Attendance| ITSC-HRMS {% endblock title %}
+
+{% block content %}
+
+                                                                <a href="{% url 'hrms:break_out' pk=ps.staff.pk %}"  class="btn btn-sm btn-info " class="btn btn-sm btn-info disabled" > <i class="fa fa-sign-out"></i> Break-out</a>
+
+{% endblock content %}
