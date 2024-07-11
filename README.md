@@ -31,12 +31,16 @@ Activate the virtual environment.
 
 Install dependencies: pip install -r requirements.txt.
 
-Make database migrations: python manage.py makemigrations.
-Apply migrations: python manage.py migrate.
-Create a superuser account: python manage.py createsuperuser.
+## Make database migrations: 
+python manage.py makemigrations.
+## Apply migrations: 
+python manage.py migrate.
+## Create a superuser account: 
+python manage.py createsuperuser.
 
 
 Usage
-Run the development server: python manage.py runserver.
+## Run the development server:
+python manage.py runserver.
 Access the application in your browser (typically http://127.0.0.1:8000/).
 Log in with your superuser credentials.
